@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网络安全警报</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+            padding: 2rem;
+            border: 3px solid #00f7ff;
+            border-radius: 10px;
+            background: rgba(0, 0, 50, 0.9);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.5);
+            animation: glow 2s infinite alternate;
+        }
+
+        .scanline {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                transparent 50%,
+                rgba(0, 247, 255, 0.1) 51%,
+                transparent 52%);
+            animation: scan 4s linear infinite;
+        }
+
+        h1 {
+            color: #ff003c;
+            font-size: 3.5vw;
+            text-shadow: 0 0 15px #ff003c;
+            margin: 0;
+            animation: blink 0.8s infinite alternate;
+        }
+
+        .message {
+            color: #00f7ff;
+            font-size: 2vw;
+            margin: 20px 0;
+            letter-spacing: 2px;
+        }
+
+        .timer {
+            color: #fff;
+            font-size: 4vw;
+            font-family: 'Digital', monospace;
+            text-shadow: 0 0 10px #00f7ff;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(0, 247, 255, 0.5); }
+            to { box-shadow: 0 0 30px rgba(0, 247, 255, 0.8); }
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* 网格背景 */
+        body:before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(0, 247, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 247, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: move 20s linear infinite;
+            transform: rotate(15deg);
+        }
+
+        @keyframes move {
+            0% { transform: rotate(15deg) translate(0, 0); }
+            100% { transform: rotate(15deg) translate(-20px, -20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+    <div class="container">
+        <h1>⚠️周老师的爱⚠️</h1>
+        <p class="message">为你断开互联网</p>
+        <p class="message">网络访问权限已被冻结</p>
+        <div class="timer" id="timer">100:00</div>
+        <p class="message">不用谢，好好享受自己的思维</p>
+    </div>
+
+    <script>
+        // 倒计时逻辑
+        let minutes = 100;
+        let seconds = 0;
+
+        function updateTimer() {
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = 
+                `${String(minutes).padStart(3, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    window.location.href = 'about:blank';
+                    return;
+                }
+                minutes--;
+                seconds = 59;
+            } else {
+                seconds--;
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
